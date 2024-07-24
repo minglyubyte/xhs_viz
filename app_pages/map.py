@@ -98,4 +98,4 @@ if selected_location != "All":
 
 # Display the map in Streamlit
 with st.container():
-    st.components.v1.html(folium.Figure().add_child(m)._repr_html_(), height=500)
+    st.components.v1.html(folium.Figure().add_child(m)._repr_html_(), height=700)
