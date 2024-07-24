@@ -1,0 +1,69 @@
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+main.ipynb
+
+# Ignore Jupyter Notebook temporary files
+*.~nb
+
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore virtual environment directories
+venv/
+env/
+ENV/
+.venv/
+.VENV/
+.env
+
+# Ignore distribution/build directories
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+*.whl
+
+# Ignore logs and databases
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Ignore personal IDE/editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore Jupyter Notebook configuration
+.jupyter/
+custom.js
+
+# Ignore Python cache files
+*.pytest_cache/
+.coverage
+
+# Ignore test outputs
+test/
+
+# Ignore Streamlit cache and config
+.streamlit/
+
+# Ignore Python packages
+*.egg
+.eggs/
+*.manifest
+*.spec
+
+# Ignore temporary files
+*.tmp
+*.temp
+
