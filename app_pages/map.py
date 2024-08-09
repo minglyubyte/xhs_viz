@@ -11,7 +11,15 @@ file_path = './data/xhs_data.json'
 data = load_data(file_path)
 
 # Initialize Streamlit
-st.title("小红书推荐可视化")
+st.title("XHS Recommendation Visualization")
+
+# Sidebar to show the list of target cities
+st.sidebar.header("Target City")
+target_city_names = ["All"] + list(set([post["target_city"] for post in data]))
+selected_target_city = st.sidebar.selectbox(
+    "Select a target city",
+    target_city_names
+)
 
 # Sidebar to show the list of locations
 st.sidebar.header("Locations")
@@ -64,35 +72,65 @@ def add_marker(location):
         icon=get_icon(location['categories'][0])  # Use the first category for the marker icon
     ).add_to(marker_cluster)
 
-# Filter and display markers based on selected location and category
+# Filter and display markers based on selected target city, location, and category
 for location in data:
-    if selected_location == "All" and selected_category == "All":
-        add_marker(location)
-    elif selected_location == "All" and selected_category in location['categories']:
-        add_marker(location)
-    elif selected_location == location["location_name"] and selected_category == "All":
-        add_marker(location)
-        map_center = location['location']  # Update map center to selected location
-    elif selected_location == location["location_name"] and selected_category in location['categories']:
-        add_marker(location)
-        map_center = location['location']  # Update map center to selected location
+    if selected_target_city == "All":
+        if selected_location == "All" and selected_category == "All":
+            add_marker(location)
+        elif selected_location == "All" and selected_category in location['categories']:
+            add_marker(location)
+        elif selected_location == location["location_name"] and selected_category == "All":
+            add_marker(location)
+            map_center = location['location']  # Update map center to selected location
+        elif selected_location == location["location_name"] and selected_category in location['categories']:
+            add_marker(location)
+            map_center = location['location']  # Update map center to selected location
+    else:
+        if location["target_city"] == selected_target_city:
+            if selected_location == "All" and selected_category == "All":
+                add_marker(location)
+                map_center = location['location']  # Update map center to selected target city
+            elif selected_location == "All" and selected_category in location['categories']:
+                add_marker(location)
+                map_center = location['location']  # Update map center to selected target city
+            elif selected_location == location["location_name"] and selected_category == "All":
+                add_marker(location)
+                map_center = location['location']  # Update map center to selected location
+            elif selected_location == location["location_name"] and selected_category in location['categories']:
+                add_marker(location)
+                map_center = location['location']  # Update map center to selected location
 
 # Show relevant posts in the sidebar
 st.sidebar.header("Relevant Posts")
 displayed_titles = set()
 for location in data:
-    if (selected_location == "All" or selected_location == location["location_name"]) and (selected_category == "All" or selected_category in location['categories']):
-        if location['title'] not in displayed_titles:
-            st.sidebar.image(location["image"], width=150)
-            st.sidebar.write(f"**{location['title']}**")
-            st.sidebar.write(f"{categories_to_emojis(location['categories'])}")
-            st.sidebar.write(f"❤️ {location['likes']} ⭐ {location['collections']} 💬 {location['comments']}")
-            st.sidebar.write(f"[Read more]({location['link']})")
-            st.sidebar.write("---")
-            displayed_titles.add(location['title'])
+    if selected_target_city == "All":
+        if (selected_location == "All" or selected_location == location["location_name"]) and (selected_category == "All" or selected_category in location['categories']):
+            if location['title'] not in displayed_titles:
+                st.sidebar.image(location["image"], width=150)
+                st.sidebar.write(f"**{location['title']}**")
+                st.sidebar.write(f"{categories_to_emojis(location['categories'])}")
+                st.sidebar.write(f"❤️ {location['likes']} ⭐ {location['collections']} 💬 {location['comments']}")
+                st.sidebar.write(f"[Read more]({location['link']})")
+                st.sidebar.write("---")
+                displayed_titles.add(location['title'])
+    else:
+        if location["target_city"] == selected_target_city:
+            if (selected_location == "All" or selected_location == location["location_name"]) and (selected_category == "All" or selected_category in location['categories']):
+                if location['title'] not in displayed_titles:
+                    st.sidebar.image(location["image"], width=150)
+                    st.sidebar.write(f"**{location['title']}**")
+                    st.sidebar.write(f"{categories_to_emojis(location['categories'])}")
+                    st.sidebar.write(f"❤️ {location['likes']} ⭐ {location['collections']} 💬 {location['comments']}")
+                    st.sidebar.write(f"[Read more]({location['link']})")
+                    st.sidebar.write("---")
+                    displayed_titles.add(location['title'])
 
 # If a specific location is selected, update the map center and zoom
-if selected_location != "All":
+if selected_target_city != "All":
+    m.location = map_center
+    m.zoom_start = 12
+elif selected_location != "All":
     m.location = map_center
     m.zoom_start = 12
 

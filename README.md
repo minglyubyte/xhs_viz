@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This project aims to visualize and statistically analyze data from little red book, providing users with recommended locations, popular posts, and relevant statistical information. The project uses Streamlit for visualization, Folium for map display, and Matplotlib and WordCloud for statistical analysis.
+This project aims to visualize and statistically analyze data from little red book, providing users with recommended locations, popular posts, and relevant statistical information. The project uses Streamlit for visualization, Folium for map display, and Matplotlib and WordCloud for statistical analysis. You can check out the streamlit deployment here: https://xhsvisualization.streamlit.app/
 
 ## Directory Structure
 

@@ -25,6 +25,7 @@ dist/
 *.egg-info/
 pip-wheel-metadata/
 *.whl
+data.json
 
 # Ignore logs and databases
 *.log

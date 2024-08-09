@@ -14,7 +14,8 @@ def convert_to_new_format(data):
                     "likes": item["liked_count"],
                     "collections": item["collected_count"],
                     "comments": item['comment_count'],
-                    'categories': [k.strip() for k in item['categories'].split(",")]
+                    'categories': [k.strip() for k in item['categories'].split(",")],
+                    'target_city': item['target_city']
                 })
     return new_data
 
